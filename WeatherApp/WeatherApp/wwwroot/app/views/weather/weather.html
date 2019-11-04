@@ -1,0 +1,71 @@
+﻿<div class="col-md-7 offset-3">
+    <h1>Check the weather</h1>
+
+    <hr class="my-4" />
+
+    <div data-ng-hide="message == ''"
+         class="alert alert-danger">
+        {{message}}
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <form ng-submit="getWeather()">
+
+                <div class="form-group">
+                    <label>City name</label>
+                    <input ng-model="weatherReq.CityName"
+                           type="text" class="form-control"
+                           placeholder="Enter city name"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>From date</label>
+                    <input type="date"
+                           ng-model="weatherReq.start"
+                           class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>To date</label>
+                    <input type="date" ng-model="weatherReq.end"
+                           class="form-control">
+                </div>
+
+                <button type="submit"
+                        class="btn btn-lg btn-info btn-block" ng-disabled="disableBtn">
+                    Get weather
+                    <div ng-hide="!disableBtn" class="spinner-border text-success" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </button>
+            </form>
+        </div>
+
+        <div class="col-md-8">
+            <div ng-repeat="resp in weatherResp">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h4 ng-bind="resp.date | date:'dd-MMM-yyyy'"></h4>
+                        <hr class="my-4" />
+                        <div class="row" ng-repeat="w in resp.weatherInfo">
+                            <div class="col-md-7 lead">
+                                <p class="font-weight-bold">{{ w.description }}<p>
+                                <p>Hour: <span ng-bind="w.date | date:'HH:mm'"></span></p>
+                                <p>Min temperature: {{ w.minTemp }} &#8451;</p>
+                                <p>Max temperature: {{ w.maxTemp }} &#8451;</p>
+                            </div>
+                            <div class="col-md-5 text-right">
+                                <img data-ng-src="{{'https://openweathermap.org/img/w/' + w.icon + '.png'}}" />
+                                <h2>{{ w.maxTemp }} &#8451;</h2>
+                            </div>
+                            <hr class="col-md-10">
+                        </div>
+                    </li>
+                </ul>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
