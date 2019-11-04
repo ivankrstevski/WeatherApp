@@ -2,9 +2,8 @@
 
 ## Application start:
 
-1. You need to check the **DefaultConnection** property in the file **Web.config** 
-that is included into the project **WeatherApp.API** from the solution WeatherApp.API,
-so the database can be created, according to your configuration.
+1. You need to check and configure if needs, the **DefaultConnection** property in the file **Web.config** 
+that is included into the project **WeatherApp.API**, so the database can be created according to the configuration.
 
 Now the connection string looks like the one below:
 
@@ -14,7 +13,7 @@ Now the connection string looks like the one below:
 </connectionStrings>
 ```
 
-2. Right click on the project **WeatherApp.API** from the solution **WeatherApp.API** and click the option Set as StartUp Project.
+2. Right click on the project **WeatherApp.API** and click the option **Set as StartUp Project**. 
 
 
 
