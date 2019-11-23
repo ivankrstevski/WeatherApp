@@ -5,5 +5,9 @@
         $location.path('/');
     }
 
+    $scope.isActivePage = function (path) {
+        return ($location.path().substr(0, path.length) === path) ? true : false;
+    }
+
     $scope.authentication = userService.authentication;
 });

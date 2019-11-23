@@ -16,11 +16,38 @@
             <a class="navbar-brand" href="#">Weather App</a>
 
             <ul class="nav navbar-nav ml-auto">
-                <li data-ng-hide="authentication.isAuth"><a class="nav-link" href="#!login">Log in</a></li>
-                <li data-ng-hide="authentication.isAuth"><a class="nav-link" href="#!signup">Sign up</a></li>
-                <li data-ng-hide="!authentication.isAuth"><a class="nav-link" href="#!weather">See weather</a></li>
-                <li data-ng-hide="!authentication.isAuth"><a class="nav-link" href="#!weather">{{ authentication.fullName }}</a></li>
-                <li data-ng-hide="!authentication.isAuth"><a class="nav-link" href="" data-ng-click="logOut()">Logout</a></li>
+                <li data-ng-hide="authentication.isAuth">
+                    <a class="nav-link" ng-class="{active:
+                       isActivePage('/login')}" href="#!login">
+                        Log in
+                    </a>
+                </li>
+
+                <li data-ng-hide="authentication.isAuth">
+                    <a class="nav-link" ng-class="{active:
+                       isActivePage('/signup')}" href="#!signup">
+                        Sign up
+                    </a>
+                </li>
+
+                <li data-ng-hide="!authentication.isAuth">
+                    <a class="nav-link" ng-class="{active:
+                       isActivePage('/weather')}" href="#!weather">
+                        See weather
+                    </a>
+                </li>
+
+                <li data-ng-hide="!authentication.isAuth">
+                    <a class="nav-link" href="#!weather">
+                        {{ authentication.fullName }}
+                    </a>
+                </li>
+
+                <li data-ng-hide="!authentication.isAuth">
+                    <a class="nav-link" href="" data-ng-click="logOut()">
+                        Logout
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
