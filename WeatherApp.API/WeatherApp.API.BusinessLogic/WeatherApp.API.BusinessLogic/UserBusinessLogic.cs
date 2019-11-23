@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WeatherApp.API.BusinessLogic.Interfaces;
+using WeatherApp.API.BusinessModel.Common;
 using WeatherApp.API.BusinessModel.Identity;
 using WeatherApp.API.Configurations.Interfaces;
 using WeatherApp.API.Services.Interfaces;
@@ -25,12 +23,44 @@ namespace WeatherApp.API.BusinessLogic
 
         public List<string> Create(AppUser customer, string password)
         {
-            var dmReq = _autoMapper.Map<AppUser,
-                DataModel.Identity.AppUser>(customer);
+            try
+            {
+                var dmReq = _autoMapper.Map<AppUser,
+                    DataModel.Identity.AppUser>(customer);
 
-            var response = _userService.Save(dmReq, password);
+                var response = _userService.Save(dmReq, password);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public Result<UserInfo> Get(string userName)
+        {
+            var result = new Result<UserInfo>
+            {
+                ErrorMessage = string.Empty
+            };
+
+            try
+            {
+                var user = _userService.Get(userName);
+
+                var userInfo = _autoMapper
+                    .Map<DataModel.Identity.AppUser, 
+                    UserInfo>(user);
+
+                result.Data = userInfo;
+            }
+            catch (Exception ex)
+            {
+                result.ErrorMessage = ex.Message;
+            }
+
+            return result;
         }
     }
 }

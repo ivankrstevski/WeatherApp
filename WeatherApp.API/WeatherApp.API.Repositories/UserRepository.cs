@@ -17,13 +17,29 @@ namespace WeatherApp.API.Repositories
             _appUserManager = appUserManager;
         }
 
+        public AppUser Get(string userName)
+        {
+            try
+            {
+                var result = _appUserManager.FindByName(userName);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<string> Save(AppUser userIdentity, string password)
         {
             List<string> result = null;
 
             try
             {
-                result = _appUserManager.Create(userIdentity, password).Errors.ToList();
+                result = _appUserManager.Create(
+                    userIdentity, password)
+                    .Errors.ToList();
             }
             catch (Exception ex)
             {

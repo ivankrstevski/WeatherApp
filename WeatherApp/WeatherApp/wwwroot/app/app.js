@@ -3,13 +3,14 @@
 app.run(["$rootScope", "$location", "userService", function ($rootScope, $location, userService) {
     userService.getAuthData();
 
-    $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
+    $rootScope.$on("$routeChangeError", function (rejection) {
         if (rejection == true) {
             $location.path("/");
         }
     });
 }]);
 
-app.config(function ($httpProvider) {
+app.config(function ($httpProvider, $logProvider) {
     $httpProvider.interceptors.push('authorizationService');
+    $logProvider.debugEnabled(false);
 });

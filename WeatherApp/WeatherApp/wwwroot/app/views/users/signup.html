@@ -3,7 +3,8 @@
 
     <hr class="my-4" />
 
-    <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
+    <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ?
+         'alert alert-success' : 'alert alert-danger'">
         {{message}}
     </div>
 
@@ -55,3 +56,5 @@
         </button>
     </form>
 </div>
+
+<loading-modal></loading-modal>

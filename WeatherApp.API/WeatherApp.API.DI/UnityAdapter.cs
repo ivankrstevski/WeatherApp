@@ -26,9 +26,7 @@ namespace WeatherApp.API.DI
 
             container.RegisterType<HistoryContext, MySqlHistoryContext>();
             container.RegisterType<DbContext, ApplicationDbContext>();
-            container.RegisterType<IDatabaseInitializer<ApplicationDbContext>, MySqlInitializer>();
             container.RegisterType<IUserStore<AppUser>, UserStore<AppUser>>();
-            container.RegisterType<ApplicationUserManager>();
 
             // AutoMapper
             container.RegisterType<IAutoMapper, AutoMapperAdapter>();

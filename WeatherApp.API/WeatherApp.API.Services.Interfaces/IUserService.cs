@@ -10,5 +10,6 @@ namespace WeatherApp.API.Services.Interfaces
     public interface IUserService
     {
         List<string> Save(AppUser customer, string password);
+        AppUser Get(string userName);
     }
 }

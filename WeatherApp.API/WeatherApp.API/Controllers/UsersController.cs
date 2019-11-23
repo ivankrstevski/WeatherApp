@@ -14,7 +14,7 @@ namespace WeatherApp.API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult Create(AppUser user)
+        public IHttpActionResult Create([FromBody] AppUser user)
         {
             if (!ModelState.IsValid)
             {
@@ -22,6 +22,19 @@ namespace WeatherApp.API.Controllers
             }
 
             var result = _userBusinessLogic.Create(user, user.Password);
+
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IHttpActionResult Get([FromUri] string userName)
+        {
+            if (string.IsNullOrEmpty(userName))
+            {
+                return BadRequest();
+            }
+
+            var result = _userBusinessLogic.Get(userName);
 
             return Ok(result);
         }

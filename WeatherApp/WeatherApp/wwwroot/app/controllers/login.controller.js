@@ -1,28 +1,40 @@
-﻿app.controller('loginController', function ($scope, $q, $location, userService) {
+﻿app.controller('loginController', function ($scope, $location, userService) {
 
     $scope.userData = {};
 
     $scope.message = "";
-    $scope.disableBtn = false;
 
     $scope.loginUser = function () {
         $scope.message = "";
-        $scope.disableBtn = true;
+
+        $('#loadingModal').modal({ backdrop: 'static', keyboard: false });
 
         userService
             .loginUser($scope.userData)
             .then(function (result) {
-                $location.path('/weather');
+
+                userService
+                    .getUserData()
+                    .then(function () {
+                        $location.path('/weather');
+                    });
+
             }, function (error) {
-                if (error.error_description == "") {
+
+                if (error.data != null) {
+                    if (error.error_description == "") {
+                        $scope.message = "Some error has occured, please try again.";
+                    }
+                    else {
+                        $scope.message = error.data.error_description;
+                    }
+                }
+
+                else {
                     $scope.message = "Some error has occured, please try again.";
                 }
-                else {
-                    $scope.message = error.data.error_description;
-                }
 
-                $scope.disableBtn = false;
+                $('#loadingModal').modal('hide');
             });
     }
-
 });

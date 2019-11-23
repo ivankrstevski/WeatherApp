@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WeatherApp.API.DataModel.Identity;
 using WeatherApp.API.Repositories.Interfaces;
 using WeatherApp.API.Services.Interfaces;
@@ -18,11 +15,32 @@ namespace WeatherApp.API.Services
             _userRepository = userRepository;
         }
 
+        public AppUser Get(string userName)
+        {
+            try
+            {
+                var result = _userRepository.Get(userName);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex; 
+            }
+        }
+
         public List<string> Save(AppUser customer, string password)
         {
-            var result = _userRepository.Save(customer, password);
+            try
+            {
+                var result = _userRepository.Save(customer, password);
 
-            return result;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

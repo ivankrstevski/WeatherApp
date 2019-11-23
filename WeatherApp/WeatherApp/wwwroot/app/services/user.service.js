@@ -41,6 +41,7 @@
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).then(function (response) {
+
             localStorageService.set('authorizationData',
                 {
                     token: response.data.access_token,
@@ -58,12 +59,47 @@
         return deferred.promise;
     }
 
+    var getUserData = function () {
+        var locaStorage = localStorageService.get('authorizationData');
+
+        var userName = locaStorage['userName'];
+
+        var address = baseAdress + 'api/users?userName=' + userName;
+
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: address,
+        }).then(function (response) {
+            var data = response.data.data;
+
+            var fullName = data.name + ' ' + data.surname;
+
+            localStorageService.set('authorizationData',
+                {
+                    token: locaStorage['token'],
+                    userName: locaStorage['userName'],
+                    fullName: fullName
+                });
+
+            _authentication.fullName = fullName;
+
+            deferred.resolve(response)
+        }, function (error) {
+            deferred.reject(error);
+        });
+
+        return deferred.promise;
+    }
+
     var getAuthData = function () {
         var authData = localStorageService.get('authorizationData');
 
         if (authData) {
             _authentication.isAuth = true;
             _authentication.userName = authData.userName;
+            _authentication.fullName = authData.fullName;
         }
     }
 
@@ -72,6 +108,7 @@
 
         _authentication.isAuth = false;
         _authentication.userName = "";
+        _authentication.fullName = "";
     };
 
     var isAuthenticated = function () {
@@ -84,6 +121,7 @@
     userServiceFactory.logOut = _logOut;
     userServiceFactory.authentication = _authentication;
     userServiceFactory.isAuthenticated = isAuthenticated;
+    userServiceFactory.getUserData = getUserData;
 
     return userServiceFactory;
 });

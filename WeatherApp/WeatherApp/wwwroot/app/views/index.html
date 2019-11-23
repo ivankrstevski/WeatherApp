@@ -19,6 +19,7 @@
                 <li data-ng-hide="authentication.isAuth"><a class="nav-link" href="#!login">Log in</a></li>
                 <li data-ng-hide="authentication.isAuth"><a class="nav-link" href="#!signup">Sign up</a></li>
                 <li data-ng-hide="!authentication.isAuth"><a class="nav-link" href="#!weather">See weather</a></li>
+                <li data-ng-hide="!authentication.isAuth"><a class="nav-link" href="#!weather">{{ authentication.fullName }}</a></li>
                 <li data-ng-hide="!authentication.isAuth"><a class="nav-link" href="" data-ng-click="logOut()">Logout</a></li>
             </ul>
         </div>
@@ -37,6 +38,8 @@
     <script src="../../lib/twitter-bootstrap/js/bootstrap.min.js"></script>
 
     <script src="app/app.js"></script>
+
+    <script src="app/directives/loadingModal.directive.js"></script>
 
     <script src="app/services/user.service.js"></script>
     <script src="app/services/weather.service.js"></script>

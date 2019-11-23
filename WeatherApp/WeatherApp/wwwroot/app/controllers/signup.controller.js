@@ -4,17 +4,15 @@
 
     $scope.savedSuccessfully = false;
     $scope.message = "";
-    $scope.disableBtn = false;
 
     $scope.createUser = function () {
         $scope.message = "";
-        $scope.disableBtn = true;
 
+        $('#loadingModal').modal({ backdrop: 'static', keyboard: false });
 
         if ($scope.user.password != $scope.user.confirmation) {
             $scope.message = "Password and confirmation are not the same value.";
             $scope.savedSuccessfully = false;
-            $scope.disableBtn = false;
             return;
         }
 
@@ -26,22 +24,35 @@
                     $scope.savedSuccessfully = false;
                     $scope.message = "Failed to register user due to:\n" + response.data.join(' ');
 
-                    $scope.disableBtn = false;
+                    $('#loadingModal').modal('hide');
                 }
                 else {
                     $scope.savedSuccessfully = true;
-                    $scope.message = "User has been registered successfully. You will be redirected to login form.";
+                    $scope.message = "User has been registered successfully." +
+                        "You will be redirected to login form.";
                     movetoLogin();
                 }
             }, function (response) {
                 var errors = [];
-                for (var key in response.data.modelState) {
-                    for (var i = 0; i < response.data.modelState[key].length; i++) {
-                        errors.push(response.data.modelState[key][i]);
+
+                $scope.message = "Failed to register user \n";
+
+                if (response.data != null) {
+
+                    console.log(response);
+
+                    for (var key in response.data.modelState) {
+                        for (var i = 0; i < response.data.modelState[key].length; i++) {
+                            errors.push(response.data.modelState[key][i]);
+                        }
                     }
                 }
-                $scope.message = "Failed to register user due to:\n" + errors.join(' ');
-                $scope.disableBtn = false;
+
+                if (errors.length != 0) {
+                    $scope.message += 'due to:' + errors.join(' ');
+                }
+
+                $('#loadingModal').modal('hide');
             });
     }
 
